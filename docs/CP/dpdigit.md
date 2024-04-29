@@ -8,11 +8,7 @@ Bài toán đưa ra thường sẽ là: đếm số lượng các số nguyên c
 
 Nếu giới hạn $R-L$ nhỏ, ta có thể duyệt như sau:
 
-```
-for i = L -> R:
-    if (ok(i)): ans++
-print(ans)
-```
+??? tip "Lời giải" Rõ ràng là cách giải của chúng ta sẽ xoay quanh vì giá trị lớn nhất của nó chỉ là .
 
 Trong đó hàm ``ok(i)`` là hàm xác định xem $i$ có thoả mãn tính chất đề bài không. Độ phức tạp của cách làm này là $O((R-L+1) \times ...)$, có thể không phù hợp với các bài toán giới hạn lớn hơn.
 
