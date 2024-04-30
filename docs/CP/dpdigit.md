@@ -43,7 +43,7 @@ Như vậy ta có một mẫu chung cho các bài toán dạng này như sau:
         limit = smaller ? 9 : a[i]
         for d = 0 -> limit:
             // new_cond là điều kiện mới sau khi điền chữ số d vào vị trí thứ i
-            ans += dp(i - 1, smaller \|\| (d < a[i]), new_cond)
+            ans += dp(i - 1, smaller || (d < a[i]), new_cond)
         return f[i, smaller, cond] = ans
     
     fill(all(f), -1);
