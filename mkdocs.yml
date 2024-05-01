@@ -17,6 +17,8 @@ theme:
     - content.code.annotation
     - content.code.select
     - content.code.copy
+    - navigation.instant
+    - navigation.instant.prefetch
   icon:
     admonition:
       note: octicons/tag-16

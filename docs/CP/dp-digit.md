@@ -65,7 +65,7 @@ Tuy nhiên không chỉ có việc đếm một số $X$, mà việc đếm mộ
     - Gọi $F(i,smaller,sum)$ là số cấu hình khi xét đến vị trí $i$, số hiện tại đã nhỏ hơn cận trên chưa, và tổng các chữ số của số đang xét hiện tại là bao nhiêu?
     - Nếu $i < 0$ ta trả về $1$ nếu $sum$ là số nguyên tố
     - Ngược lại, ta duyệt mọi ứng cử viên của chữ số thứ $i$, và cập nhật biến $smaller,sum$ tương ứng
-    - Với giới hạn $A,B \leq 10^8$, cùng $100$ test, ta có độ phức tạp là $O(T \times \|B\| \times \|B\| \times 9 \times 10) = O(T \times 8^2 \times 9 \times 10)$ (số trạng thái nhân với chi phí chuyển trạng thái)
+    - Với giới hạn $A,B \leq 10^8$, cùng $100$ test, ta có độ phức tạp là $O(T \times |B| \times |B| \times 9 \times 10) = O(T \times 8^2 \times 9 \times 10)$ (số trạng thái nhân với chi phí chuyển trạng thái)
 
 ??? abstract "Cài đặt"
 
@@ -817,7 +817,7 @@ Ta sẽ sử dụng một số tính chất số học (ví dụ như liên quan
     - Tuy nhiên với $n \leq 10^6$ ta không thể làm cách trên. Ta cần chỉnh sửa cách làm một chút dựa trên tư tưởng trên
         - Ta tính $f(i,mask,mod)$ là số cách điền $i$ chữ số đầu tiên, chỉ được dùng các chữ số là **tập con** của $mask$, và số dư cho $63$ là $mod$
         - Ta không thể tính $f(i,...)$ trong $O(n \times ...)$. Nhưng ta có một trick để giảm độ phức tạp, các bạn có thể tham khảo tại [blog của DeMen100ns](https://hackmd.io/@DeMen100ms/DeMenBlog3).
-            - Cụ thể: với $f(i1, mask, mod)$ và $f(i2, mask', mod')$ thì ta có thể merge chúng lại thành $f(i1+i2, mask\|mask', (mod \times 10^{i2} + mod') \%63)$
+            - Cụ thể: với $f(i1, mask, mod)$ và $f(i2, mask', mod')$ thì ta có thể merge chúng lại thành $f(i1+i2, mask|mask', (mod \times 10^{i2} + mod') \%63)$
             - Độ phức tạp cho việc merge 2 state $(mask,mod)$ và $(mask',mod)$ là $(2^8 \times 63)^2$, quá lâu. Vậy thay vì gom cả $mask$ vào trạng thái, ta duyệt $mask$, tính $f(n-4,mask,\cdots)$ theo cách trên
         - Đặt $F(mask,mod)=f(n-4,mask,mod)$. 
         - Để tính số cách dùng đúng các chữ số trong $mask$, không có số nào chỉ dùng các chữ số trong tập con của $mask$ ta dùng DP SOS.
