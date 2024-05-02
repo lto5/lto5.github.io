@@ -12,7 +12,7 @@ theme:
     - navigation.expand
     - navigation.instant
     - navigation.path
-    - toc.integrate
+    # - toc.integrate
     - navigation.top
     - search.suggest
     - search.highlight

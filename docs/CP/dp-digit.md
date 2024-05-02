@@ -39,7 +39,7 @@ Như vậy ta có một mẫu chung cho các bài toán dạng này như sau:
             return 1 nếu điều kiện thoả mãn, 0 nếu ngược lại
         if (f[i, smaller, cond] != -1): // đã được tính
             return f[i, smaller, cond]
-        ans=0
+        ans = 0
         limit = smaller ? 9 : a[i]
         for d = 0 -> limit:
             // new_cond là điều kiện mới sau khi điền chữ số d vào vị trí thứ i
