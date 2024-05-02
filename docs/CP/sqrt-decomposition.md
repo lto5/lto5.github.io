@@ -1,4 +1,5 @@
 # Chia căn và các biến thể
+*Bài được viết khi tác giả đang panic với môn TTHCM :fontawesome-regular-face-sad-tear:*
 
 Trên VNOI đã có rất nhiều bài về chia căn (tới 2 blog và 2 contest Edu), tuy nhiên các kĩ thuật sử dụng trong contest Edu của VNOI lại chưa được trình bày cụ thể ở bài viết nào mà chỉ có thể thu được qua việc làm các bài tương tự. Vậy trong bài viết này chúng ta sẽ cùng tìm hiểu một số "dạng" chia căn thường gặp.
 
@@ -1152,8 +1153,7 @@ Thuật toán trên không chỉ giới hạn ở mức giải phương trình, 
 - [Codeforces - Hard equation](https://codeforces.com/gym/101853/problem/G) - bài toán yêu cầu giải $a^x \equiv b$ nhưng không với điều kiện $gcd(a,m)=1$. Gợi ý: ta có thể đổi biến $a'=ga,b'=gb,m'=gm$ với $g=gcd(a,m)$.
 - [Codechef - CHEFMOD](https://www.codechef.com/problems/CHEFMOD)
 
-
-# Tài liệu tham khảo
+## Tài liệu tham khảo
 
 - Toàn bộ các hình ảnh trong bài viết: [imgur](https://imgur.com/a/IbeUDPM)
 - [MIPT Spring Camp 2016](http://acm.math.spbu.ru/~sk1/mm/lections/mipt2016-sqrt/mipt-2016-burunduk1-sqrt.en.pdf)

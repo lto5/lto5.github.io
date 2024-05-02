@@ -9,6 +9,9 @@ theme:
   features:
     - navigation.tabs
     - navigation.sections
+    - navigation.expand
+    - navigation.instant
+    - navigation.path
     - toc.integrate
     - navigation.top
     - search.suggest
@@ -19,6 +22,7 @@ theme:
     - content.code.copy
     - navigation.instant
     - navigation.instant.prefetch
+    - toc.follow
   icon:
     admonition:
       note: octicons/tag-16
@@ -39,7 +43,7 @@ theme:
       toggle:
         icon: material/toggle-switch-off-outline 
         name: Switch to dark mode
-      primary: red
+      primary: indigo
       accent: purple 
     - scheme: slate 
       toggle:
@@ -51,6 +55,15 @@ theme:
 plugins:
   # - social
   - search
+  - literate-nav:
+      nav_file: navigation.md
+
+# nav:
+#   - Trang chủ: index.md
+#   - Nội dung: navigation.md
+#   - CP:
+#     - Quy hoạch động chữ số: CP/dp-digit.md
+#     - Chia căn và các biến thể: CP/sqrt-decomposition.md
 
 extra:
   social:
@@ -76,11 +89,11 @@ markdown_extensions:
       emoji_index: !!python/name:material.extensions.emoji.twemoji
       emoji_generator: !!python/name:material.extensions.emoji.to_svg
   - md_in_html
+  - toc:
+      permalink: true
 
 extra_javascript:
   - javascripts/mathjax.js
-  - https://polyfill.io/v3/polyfill.min.js?features=es6
-  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
   - https://polyfill.io/v3/polyfill.min.js?features=es6
   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
 

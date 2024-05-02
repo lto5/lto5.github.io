@@ -1,3 +1,6 @@
 - Trang chủ
     - [Giới thiệu](index.md)
-    - [Các tài liệu](navigation.md)
+    - [Nội dung](navigation.md)
+- CP
+    - [Quy hoạch động chữ số](CP/dp-digit.md)
+    - [Chia căn và các biến thể](CP/sqrt-decomposition.md)
