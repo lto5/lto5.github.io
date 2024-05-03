@@ -15,7 +15,7 @@ $$a\ \overbrace{b\ a\ \underbrace{b}_{s_4}\ a\ b}^{d_{1}[4]=3} c$$
 
 - $d_{2i}$ là độ dài của xâu đối xứng dài nhất có tâm chẵn tại $i$, nghĩa là xâu có tâm là 2 kí tự $s_i$ và $s_{i+1}$. Ví dụ xâu $s = cbaabd$ có $d_{2}[4]=2$:
 
-$$c\ \overbrace{b\ a\ \underbrace{a}_{s_3}\ b}^{d_{2}[4]=2} d$$
+$$c\ \overbrace{b\ a\ \underbrace{a}_{s_4}\ b}^{d_{2}[4]=2} d$$
 
 - Với mỗi vị trí $i$, gọi $l, r$ là vị trí của xâu palindrome gần với vị trí $i$ nhất (bên phải nhất) tính đến thời điểm hiện tại. Ban đầu $l = 0, r = -1$.
 
