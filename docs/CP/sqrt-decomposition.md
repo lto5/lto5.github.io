@@ -788,6 +788,7 @@ Bạn đọc có thể cài đặt thử tại link: [1000F - Codeforces](https:
     Đặt $P=n^{\frac{2}{3}}$. Lúc này, ta có thể chia mảng $a$ thành $\frac{n}{P}=n^{\frac{1}{3}}$ đoạn. Vậy mỗi cặp $(l,r)$ có thể thuộc tối đa $P$ cặp đoạn (do mỗi biến $l$ và $r$ có thể thuộc $\frac{n}{P}$ đoạn riêng biệt)
 
     Ta xét tất cả các cặp khối $(b_l,b_r)$ có thể xảy ra. Với mỗi cặp khối:
+		
     - Ta duyệt các bộ $(t,l,r)$ với $\frac{l}{P}=b_l$ và $\frac{r}{P}=b_r$ theo thứ tự tăng dần của $t$. 
     - Cũng như thuật toán Mo, ta duy trì hai biến $cur_l,cur_r$ thể hiện hai biên hiện tại tính đến truy vấn đang xét. Với mỗi truy vấn xét đến, ta tiến hành tăng giảm $cur_l,cur_r$ và cập nhật $a_{cur_l},a_{cur_r}$ vào cấu trúc dữ liệu, tương tự như khi thực hiện thuật toán Mo thông thường. 
     - Tuy nhiên, ta vẫn chưa xét các thao tác update. Ta lưu thêm một biến $cur_t$ thể hiện xem ta đã duyệt đến truy vấn update thứ bao nhiêu. Trong khi $cur_t<t$, ta tiến hành cập nhật vào mảng $a$ nghĩa là gán $a_i=x$, và thay đổi cấu trúc dữ liệu nếu $cur_l \leq i \leq cur_r$
