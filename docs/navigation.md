@@ -6,3 +6,4 @@
     - [Chia căn và các biến thể](CP/sqrt-decomposition.md)
     - [Dựng cây truy vấn](CP/query-tree.md)
     - [Thuật toán Manacher](CP/manacher.md)
+    - [Offline Incremental SCC](CP/offline-incremental-scc.md)
