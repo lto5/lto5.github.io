@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schedule Editor</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid black;
+            text-align: center;
+            padding: 5px;
+        }
+
+        input {
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <table id="schedule">
+        <thead>
+            <tr>
+                <th>Tiết</th>
+                <th>Thứ 2</th>
+                <th>Thứ 3</th>
+                <th>Thứ 4</th>
+                <th>Thứ 5</th>
+                <th>Thứ 6</th>
+                <th>Thứ 7</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Generate 12 rows for periods -->
+            <script>
+                for (let i = 1; i <= 12; i++) {
+                    document.write(`<tr>
+                        <td>${i}</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>`);
+                }
+            </script>
+        </tbody>
+    </table>
+
+    <div>
+        <label for="subject">Tên môn:</label>
+        <input type="text" id="subject" placeholder="Nhập tên môn">
+
+        <label for="day">Thứ:</label>
+        <input type="text" id="day" placeholder="2-7">
+
+        <label for="period">Tiết:</label>
+        <input type="text" id="period" placeholder="l-r">
+
+        <button onclick="addSubject()">Thêm</button>
+        <button onclick="removeSubject()">Xoá</button>
+    </div>
+
+    <script>
+        function addSubject() {
+            const subject = document.getElementById('subject').value.trim();
+            const day = parseInt(document.getElementById('day').value.trim());
+            const periodRange = document.getElementById('period').value.trim();
+
+            if (!subject || !day || !periodRange) {
+                alert('Vui lòng nhập đầy đủ tên môn, thứ, và tiết!');
+                return;
+            }
+
+            if (isNaN(day) || day < 2 || day > 7) {
+                alert('Thứ không hợp lệ (chỉ nhập từ 2 đến 7)!');
+                return;
+            }
+
+            const [l, r] = periodRange.split('-').map(Number);
+
+            if (isNaN(l) || isNaN(r) || l > r || l < 1 || r > 12) {
+                alert('Khoảng tiết không hợp lệ!');
+                return;
+            }
+
+            const table = document.getElementById('schedule');
+
+            for (let i = l; i <= r; i++) {
+                const row = table.rows[i];
+                const cell = row.cells[day - 1]; // Adjust for column index
+                if (cell.innerHTML) {
+                    alert(`Tiết ${i}, Thứ ${day} đã có môn học khác!`);
+                    return;
+                }
+                cell.innerHTML = subject;
+            }
+        }
+
+        function removeSubject() {
+            const subject = document.getElementById('subject').value.trim();
+
+            if (!subject) {
+                alert('Vui lòng nhập tên môn để xoá!');
+                return;
+            }
+
+            const table = document.getElementById('schedule');
+
+            for (let i = 1; i <= 12; i++) {
+                for (let j = 1; j <= 6; j++) {
+                    const cell = table.rows[i].cells[j];
+                    if (cell.innerHTML === subject) {
+                        cell.innerHTML = '';
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+</html>
