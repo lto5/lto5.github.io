@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schedule Editor</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid black;
+            text-align: center;
+            padding: 5px;
+        }
+        input {
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <table id="schedule">
+        <thead>
+            <tr>
+                <th>Tiết</th>
+                <th>Thứ 2</th>
+                <th>Thứ 3</th>
+                <th>Thứ 4</th>
+                <th>Thứ 5</th>
+                <th>Thứ 6</th>
+                <th>Thứ 7</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Generate 12 rows for periods -->
+            <script>
+                for (let i = 1; i <= 12; i++) {
+                    document.write(`<tr>
+                        <td>${i}</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>`);
+                }
+            </script>
+        </tbody>
+    </table>
+    <div>
+        <label for="subject">Tên môn:</label>
+        <input type="text" id="subject" placeholder="Nhập tên môn" onkeypress="handleEnter(event)">
+        <label for="day">Thứ:</label>
+        <input type="text" id="day" placeholder="2-7" onkeypress="handleEnter(event)">
+        <label for="period">Tiết:</label>
+        <input type="text" id="period" placeholder="l-r" onkeypress="handleEnter(event)">
+        <button onclick="addSubject()">Thêm</button>
+        <button onclick="removeSubject()">Xoá</button>
+        <button onclick="clearAll()">Xóa tất cả</button>
+        <button onclick="exportToCSV()">Export CSV</button>
+        <input type="file" id="csvFile" accept=".csv" style="display:none" onchange="importCSV()">
+        <button onclick="document.getElementById('csvFile').click()">Import CSV</button>
+    </div>
+    <script>
+        // Load schedule from localStorage on page load
+        function loadSchedule() {
+            const savedSchedule = localStorage.getItem('schedule');
+            if (savedSchedule) {
+                const scheduleData = JSON.parse(savedSchedule);
+                const table = document.getElementById('schedule');
+                
+                for (let period = 1; period <= 12; period++) {
+                    for (let day = 2; day <= 7; day++) {
+                        const key = `${period}-${day}`;
+                        if (scheduleData[key]) {
+                            const cell = table.rows[period].cells[day - 1];
+                            cell.innerHTML = scheduleData[key];
+                        }
+                    }
+                }
+            }
+        }
+
+        // Save schedule to localStorage
+        function saveSchedule() {
+            const table = document.getElementById('schedule');
+            const scheduleData = {};
+            
+            for (let period = 1; period <= 12; period++) {
+                for (let day = 2; day <= 7; day++) {
+                    const cell = table.rows[period].cells[day - 1];
+                    if (cell.innerHTML.trim()) {
+                        scheduleData[`${period}-${day}`] = cell.innerHTML;
+                    }
+                }
+            }
+            
+            localStorage.setItem('schedule', JSON.stringify(scheduleData));
+        }
+
+        function addSubject() {
+            const subject = document.getElementById('subject').value.trim();
+            const day = parseInt(document.getElementById('day').value.trim());
+            const periodRange = document.getElementById('period').value.trim();
+            
+            if (!subject || !day || !periodRange) {
+                alert('Vui lòng nhập đầy đủ tên môn, thứ, và tiết!');
+                return;
+            }
+            
+            if (isNaN(day) || day < 2 || day > 7) {
+                alert('Thứ không hợp lệ (chỉ nhập từ 2 đến 7)!');
+                return;
+            }
+            
+            const [l, r] = periodRange.split('-').map(Number);
+            if (isNaN(l) || isNaN(r) || l > r || l < 1 || r > 12) {
+                alert('Khoảng tiết không hợp lệ!');
+                return;
+            }
+            
+            const table = document.getElementById('schedule');
+            
+            // Check for conflicts first
+            for (let i = l; i <= r; i++) {
+                const row = table.rows[i];
+                const cell = row.cells[day - 1];
+                if (cell.innerHTML.trim()) {
+                    alert(`Tiết ${i}, Thứ ${day} đã có môn học khác!`);
+                    return;
+                }
+            }
+            
+            // Add subject to cells
+            for (let i = l; i <= r; i++) {
+                const row = table.rows[i];
+                const cell = row.cells[day - 1];
+                cell.innerHTML = subject;
+            }
+            
+            // Save to localStorage
+            saveSchedule();
+            
+            // Clear input fields
+            document.getElementById('subject').value = '';
+            document.getElementById('day').value = '';
+            document.getElementById('period').value = '';
+        }
+
+        function removeSubject() {
+            const subject = document.getElementById('subject').value.trim();
+            if (!subject) {
+                alert('Vui lòng nhập tên môn để xoá!');
+                return;
+            }
+            
+            const table = document.getElementById('schedule');
+            let found = false;
+            
+            for (let i = 1; i <= 12; i++) {
+                for (let j = 1; j <= 6; j++) {
+                    const cell = table.rows[i].cells[j];
+                    if (cell.innerHTML === subject) {
+                        cell.innerHTML = '';
+                        found = true;
+                    }
+                }
+            }
+            
+            if (found) {
+                saveSchedule();
+                document.getElementById('subject').value = '';
+                alert('Đã xóa môn học!');
+            } else {
+                alert('Không tìm thấy môn học để xóa!');
+            }
+        }
+
+        function clearAll() {
+            if (confirm('Bạn có chắc muốn xóa toàn bộ thời khóa biểu?')) {
+                const table = document.getElementById('schedule');
+                for (let i = 1; i <= 12; i++) {
+                    for (let j = 1; j <= 6; j++) {
+                        table.rows[i].cells[j].innerHTML = '';
+                    }
+                }
+                localStorage.removeItem('schedule');
+                alert('Đã xóa toàn bộ thời khóa biểu!');
+            }
+        }
+
+        function exportToCSV() {
+            const table = document.getElementById('schedule');
+            let csv = '';
+            
+            // Add header row
+            const headerRow = table.rows[0];
+            let header = '';
+            for (let j = 0; j < headerRow.cells.length; j++) {
+                header += headerRow.cells[j].innerHTML;
+                if (j < headerRow.cells.length - 1) header += ',';
+            }
+            csv += header + '\n';
+            
+            // Add data rows
+            for (let i = 1; i <= 12; i++) {
+                const row = table.rows[i];
+                let rowData = '';
+                for (let j = 0; j < row.cells.length; j++) {
+                    const cellContent = row.cells[j].innerHTML.trim() || '';
+                    rowData += cellContent;
+                    if (j < row.cells.length - 1) rowData += ',';
+                }
+                csv += rowData + '\n';
+            }
+            
+            // Add BOM for UTF-8 encoding
+            const BOM = '\uFEFF';
+            csv = BOM + csv;
+            
+            // Create and download file
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            link.setAttribute('href', url);
+            link.setAttribute('download', 'thoi-khoa-bieu.csv');
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        function importCSV() {
+            const fileInput = document.getElementById('csvFile');
+            const file = fileInput.files[0];
+            
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const csv = e.target.result;
+                    const lines = csv.split('\n');
+                    
+                    if (lines.length < 2) {
+                        alert('File CSV không hợp lệ!');
+                        return;
+                    }
+                    
+                    // Clear current schedule
+                    const table = document.getElementById('schedule');
+                    for (let i = 1; i <= 12; i++) {
+                        for (let j = 1; j <= 6; j++) {
+                            table.rows[i].cells[j].innerHTML = '';
+                        }
+                    }
+                    
+                    // Import data (skip header row)
+                    for (let i = 1; i < lines.length && i <= 12; i++) {
+                        const line = lines[i].trim();
+                        if (!line) continue;
+                        
+                        const cells = line.split(',');
+                        if (cells.length >= 7) {
+                            const row = table.rows[i];
+                            // Skip first column (period number), import subjects
+                            for (let j = 1; j < 7; j++) {
+                                const subject = cells[j].trim();
+                                if (subject) {
+                                    row.cells[j].innerHTML = subject;
+                                }
+                            }
+                        }
+                    }
+                    
+                    saveSchedule();
+                    alert('Import thành công!');
+                } catch (error) {
+                    alert('Lỗi khi đọc file CSV!');
+                }
+            };
+            reader.readAsText(file, 'UTF-8');
+        }
+        
+        function parseCSVLine(line) {
+            const result = [];
+            let current = '';
+            let inQuotes = false;
+            
+            for (let i = 0; i < line.length; i++) {
+                const char = line[i];
+                if (char === '"') {
+                    inQuotes = !inQuotes;
+                } else if (char === ',' && !inQuotes) {
+                    result.push(current);
+                    current = '';
+                } else {
+                    current += char;
+                }
+            }
+            result.push(current);
+            return result;
+        }
+
+        // Handle Enter key press
+        function handleEnter(event) {
+            if (event.key === 'Enter') {
+                addSubject();
+            }
+        }
+
+        // Load schedule when page loads
+        window.onload = function() {
+            loadSchedule();
+        };
+    </script>
+</body>
+</html>
