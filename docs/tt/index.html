@@ -197,7 +197,7 @@
             const headerRow = table.rows[0];
             let header = '';
             for (let j = 0; j < headerRow.cells.length; j++) {
-                header += '"' + headerRow.cells[j].innerHTML + '"';
+                header += headerRow.cells[j].innerHTML;
                 if (j < headerRow.cells.length - 1) header += ',';
             }
             csv += header + '\n';
@@ -208,7 +208,7 @@
                 let rowData = '';
                 for (let j = 0; j < row.cells.length; j++) {
                     const cellContent = row.cells[j].innerHTML.trim() || '';
-                    rowData += '"' + cellContent + '"';
+                    rowData += cellContent;
                     if (j < row.cells.length - 1) rowData += ',';
                 }
                 csv += rowData + '\n';
