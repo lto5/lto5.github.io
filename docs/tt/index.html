@@ -51,11 +51,11 @@
     </table>
     <div>
         <label for="subject">Tên môn:</label>
-        <input type="text" id="subject" placeholder="Nhập tên môn">
+        <input type="text" id="subject" placeholder="Nhập tên môn" onkeypress="handleEnter(event)">
         <label for="day">Thứ:</label>
-        <input type="text" id="day" placeholder="2-7">
+        <input type="text" id="day" placeholder="2-7" onkeypress="handleEnter(event)">
         <label for="period">Tiết:</label>
-        <input type="text" id="period" placeholder="l-r">
+        <input type="text" id="period" placeholder="l-r" onkeypress="handleEnter(event)">
         <button onclick="addSubject()">Thêm</button>
         <button onclick="removeSubject()">Xoá</button>
         <button onclick="clearAll()">Xóa tất cả</button>
@@ -228,6 +228,13 @@
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
+        }
+
+        // Handle Enter key press
+        function handleEnter(event) {
+            if (event.key === 'Enter') {
+                addSubject();
+            }
         }
 
         // Load schedule when page loads
